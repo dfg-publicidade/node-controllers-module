@@ -44,9 +44,7 @@ describe('baseController.ts', (): void => {
                 version: 'v1'
             },
             config: {
-            },
-            connectionName: '',
-            db: undefined
+            }
         });
 
         exp.get('/status', DefaultStatusController.view(app));

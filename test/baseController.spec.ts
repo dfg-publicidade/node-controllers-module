@@ -46,9 +46,7 @@ describe('baseController.ts', (): void => {
                 security: {
                     encodeKey: '123456'
                 }
-            },
-            connectionName: '',
-            db: undefined
+            }
         });
 
         exp.options('/', TestController.options(app, 'GET'));
