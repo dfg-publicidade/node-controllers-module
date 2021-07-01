@@ -3,6 +3,7 @@ import express, { Express } from 'express';
 import http from 'http';
 import { after, before, describe, it } from 'mocha';
 import { RootController } from '../src';
+
 import ChaiHttp = require('chai-http');
 
 /* Tests */

@@ -6,6 +6,7 @@ import express, { Express, NextFunction, Request, Response } from 'express';
 import http from 'http';
 import { after, before, describe, it } from 'mocha';
 import { StatusController as DefaultStatusController } from '../src';
+
 import ChaiHttp = require('chai-http');
 
 /* Tests */
