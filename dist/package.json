@@ -12,10 +12,16 @@
     },
     "dependencies": {
         "@dfgpublicidade/node-app-module": "git+https://github.com/dfg-publicidade/node-app-module.git",
+        "@dfgpublicidade/node-cache-module": "git+https://github.com/dfg-publicidade/node-cache-module.git",
+        "@dfgpublicidade/node-calendar-module": "git+https://github.com/dfg-publicidade/node-calendar-module.git",
         "@dfgpublicidade/node-params-module": "git+https://github.com/dfg-publicidade/node-params-module.git",
         "@dfgpublicidade/node-result-module": "git+https://github.com/dfg-publicidade/node-result-module.git",
         "@dfgpublicidade/node-security-module": "git+https://github.com/dfg-publicidade/node-security-module.git",
-        "axios": "^0.21.0"
+        "@dfgpublicidade/node-strings-module": "git+https://github.com/dfg-publicidade/node-strings-module.git",
+        "@dfgpublicidade/node-validation-module": "git+https://github.com/dfg-publicidade/node-validation-module.git",
+        "axios": "^0.21.0",
+        "ics": "^2.29.0",
+        "validate": "^5.1.0"
     },
     "devDependencies": {
         "@dfgpublicidade/eslint-config": "git+ssh://git@github.com/dfg-publicidade/eslint-config.git",
