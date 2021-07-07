@@ -28,7 +28,7 @@ const baseController_1 = __importDefault(require("./baseController"));
 /* Module */
 const debug = debug_1.default('module:controller-user-agent');
 class UserAgentController extends baseController_1.default {
-    static visualizar(app) {
+    static view(app) {
         return async (req, res, next) => {
             debug('Showing user-agent...');
             debug(`User-agent found: ${req.headers['user-agent']}`);

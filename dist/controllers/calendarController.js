@@ -43,7 +43,7 @@ class CalendarController extends baseController_1.default {
                 const location = this.getParam(app, req.query, 'location');
                 const url = this.getParam(app, req.query, 'url');
                 const latitude = this.getParam(app, req.query, 'latitude', 'float');
-                const longitude = this.getParam(app, req.query, 'latitude', 'float');
+                const longitude = this.getParam(app, req.query, 'longitude', 'float');
                 const categories = this.getParam(app, req.query, 'categories');
                 const errors = eventValidation_1.default({
                     start, end,

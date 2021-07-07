@@ -26,8 +26,7 @@ const node_cache_module_1 = __importStar(require("@dfgpublicidade/node-cache-mod
 const node_result_module_1 = __importStar(require("@dfgpublicidade/node-result-module"));
 const axios_1 = __importDefault(require("axios"));
 const debug_1 = __importDefault(require("debug"));
-const redis_1 = __importDefault(require("redis"));
-const util_1 = require("util");
+const tedis_1 = require("tedis");
 const baseController_1 = __importDefault(require("./baseController"));
 /* Module */
 const debug = debug_1.default('module:controller-cache');
@@ -39,16 +38,15 @@ class CacheController extends baseController_1.default {
                 const local = this.getParam(app, req.query, 'local', 'boolean');
                 if (local) {
                     debug('Emptying local cache');
-                    node_cache_module_1.default.flush(node_cache_module_1.CacheLevel.L2);
-                    node_cache_module_1.default.flush(node_cache_module_1.CacheLevel.L1);
+                    await node_cache_module_1.default.flush(node_cache_module_1.CacheLevel.L2);
+                    await node_cache_module_1.default.flush(node_cache_module_1.CacheLevel.L1);
                 }
                 else {
                     debug('Emptying global cache');
-                    const client = redis_1.default.createClient(app.config.redis);
-                    const getKeys = util_1.promisify(client.keys).bind(client);
-                    const delKeys = util_1.promisify(client.del).bind(client);
-                    for (const cacheKeys of await getKeys('*')) {
-                        await delKeys(cacheKeys);
+                    const tedis = new tedis_1.Tedis(app.config.redis);
+                    const keys = await tedis.keys('*');
+                    for (const key of keys) {
+                        await tedis.del(key);
                     }
                 }
                 debug('Cache successful cleaned');
