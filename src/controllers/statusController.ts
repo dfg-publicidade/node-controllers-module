@@ -1,5 +1,5 @@
 import App from '@dfgpublicidade/node-app-module';
-import Result, { ResultStatus } from '@dfgpublicidade/node-result-module';
+import { SuccessHandler } from '@dfgpublicidade/node-handler-module';
 import appDebugger from 'debug';
 import { NextFunction, Request, Response } from 'express';
 import BaseController from './baseController';
@@ -13,7 +13,7 @@ class StatusController extends BaseController {
             debug('Showing server status');
 
             try {
-                const result: Result = new Result(ResultStatus.SUCCESS, {
+                return SuccessHandler.handle(app, {
                     api: app.info.name,
                     version: app.info.version,
                     situation: 'online',
@@ -23,9 +23,7 @@ class StatusController extends BaseController {
                     environment: process.env.NODE_ENV,
                     variables: process.env,
                     ...(await this.getAdditionalVariables(app, req))
-                });
-
-                res.json(result);
+                })(req, res, next);
             }
             catch (error) {
                 debug('An error has occurred showing server status');

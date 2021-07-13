@@ -1,6 +1,6 @@
 import App from '@dfgpublicidade/node-app-module';
 import Cache, { CacheLevel } from '@dfgpublicidade/node-cache-module';
-import Result, { HttpStatus, ResultStatus } from '@dfgpublicidade/node-result-module';
+import { SuccessHandler } from '@dfgpublicidade/node-handler-module';
 import axios, { AxiosResponse } from 'axios';
 import appDebugger from 'debug';
 import { NextFunction, Request, Response } from 'express';
@@ -38,12 +38,9 @@ class CacheController extends BaseController {
 
                 debug('Cache successful cleaned');
 
-                const result: Result = new Result(ResultStatus.SUCCESS, {
+                return SuccessHandler.handle(app, {
                     message: res.lang ? res.lang('cacheCleaned') : 'Cache successful cleaned'
-                });
-
-                res.status(HttpStatus.success);
-                res.json(result);
+                })(req, res, next);
             }
             catch (error) {
                 debug('An error has occurred when tried to clear cache');

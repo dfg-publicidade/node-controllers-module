@@ -19,7 +19,6 @@ describe('calendarController.ts', (): void => {
     let exp: Express;
     let httpServer: http.Server;
     let app: App;
-    let app2: App;
 
     before(async (): Promise<void> => {
         exp = express();
@@ -30,14 +29,6 @@ describe('calendarController.ts', (): void => {
         httpServer = http.createServer(exp);
 
         app = new App({
-            appInfo: {
-                name: 'test',
-                version: 'v1'
-            },
-            config: {}
-        });
-
-        app2 = new App({
             appInfo: {
                 name: 'test',
                 version: 'v1'
@@ -58,11 +49,9 @@ describe('calendarController.ts', (): void => {
             }
         });
 
-        exp.get('/', CalendarController.generate(app));
-
         exp.use(i18n.init);
 
-        exp.get('/2', CalendarController.generate(app2));
+        exp.get('/', CalendarController.generate(app));
 
         exp.use((error: any, req: Request, res: Response, next: NextFunction): void => {
             // eslint-disable-next-line no-magic-numbers
@@ -105,35 +94,12 @@ describe('calendarController.ts', (): void => {
         expect(res.data).to.have.property('time');
         expect(res.data).to.have.property('status').eq('warning');
         expect(res.data).to.have.property('content')
-            .which.have.property('message').eq('The data provided is invalid');
-        expect(res.data).to.have.property('content')
-            .which.have.property('errors_validation').not.empty;
-    });
-
-    it('2. generate', async (): Promise<void> => {
-        let res: any;
-
-        try {
-            await axios({
-                method: 'GET',
-                url: 'http://localhost:3000/2'
-            });
-        }
-        catch (error) {
-            res = error.response;
-        }
-
-        expect(res).to.exist;
-        expect(res.status).eq(HttpStatus.badRequest);
-        expect(res.data).to.have.property('time');
-        expect(res.data).to.have.property('status').eq('warning');
-        expect(res.data).to.have.property('content')
             .which.have.property('message').eq(i18n.__('invalidData'));
         expect(res.data).to.have.property('content')
             .which.have.property('errors_validation').not.empty;
     });
 
-    it('3. generate', async (): Promise<void> => {
+    it('2. generate', async (): Promise<void> => {
         const res: AxiosResponse = await axios({
             method: 'GET',
             url: 'http://localhost:3000/',
@@ -165,7 +131,7 @@ describe('calendarController.ts', (): void => {
         }
     });
 
-    it('4. generate', async (): Promise<void> => {
+    it('3. generate', async (): Promise<void> => {
         const res: AxiosResponse = await axios({
             method: 'GET',
             url: 'http://localhost:3000/',
@@ -210,6 +176,36 @@ describe('calendarController.ts', (): void => {
         }
     });
 
+    it('4. generate', async (): Promise<void> => {
+        let res: any;
+
+        try {
+            await axios({
+                method: 'GET',
+                url: 'http://localhost:3000/',
+                params: {
+                    start: '01/01/2021 10:00',
+                    end: '01/01/2021 11:00',
+                    title: 'Test',
+                    url: 'x'
+                },
+                responseType: 'blob'
+            });
+        }
+        catch (error) {
+            res = error.response;
+        }
+
+        expect(res).to.exist;
+        expect(res.status).eq(HttpStatus.badRequest);
+        expect(res.data).to.have.property('time');
+        expect(res.data).to.have.property('status').eq('warning');
+        expect(res.data).to.have.property('content')
+            .which.have.property('message').eq('Dados invalidos!');
+        expect(res.data).to.have.property('content')
+            .which.have.property('errors_validation').not.empty;
+    });
+
     it('5. generate', async (): Promise<void> => {
         let res: any;
 
@@ -235,42 +231,12 @@ describe('calendarController.ts', (): void => {
         expect(res.data).to.have.property('time');
         expect(res.data).to.have.property('status').eq('warning');
         expect(res.data).to.have.property('content')
-            .which.have.property('message').eq('The data provided is invalid');
-        expect(res.data).to.have.property('content')
-            .which.have.property('errors_validation').not.empty;
-    });
-
-    it('6. generate', async (): Promise<void> => {
-        let res: any;
-
-        try {
-            await axios({
-                method: 'GET',
-                url: 'http://localhost:3000/2',
-                params: {
-                    start: '01/01/2021 10:00',
-                    end: '01/01/2021 11:00',
-                    title: 'Test',
-                    url: 'x'
-                },
-                responseType: 'blob'
-            });
-        }
-        catch (error) {
-            res = error.response;
-        }
-
-        expect(res).to.exist;
-        expect(res.status).eq(HttpStatus.badRequest);
-        expect(res.data).to.have.property('time');
-        expect(res.data).to.have.property('status').eq('warning');
-        expect(res.data).to.have.property('content')
             .which.have.property('message').eq(i18n.__('invalidData'));
         expect(res.data).to.have.property('content')
             .which.have.property('errors_validation').not.empty;
     });
 
-    it('7. generate', async (): Promise<void> => {
+    it('6. generate', async (): Promise<void> => {
         const year: any = moment.prototype.year;
 
         moment.prototype.year = (): void => {

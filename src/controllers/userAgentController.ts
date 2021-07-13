@@ -1,5 +1,5 @@
 import App from '@dfgpublicidade/node-app-module';
-import Result, { ResultStatus } from '@dfgpublicidade/node-result-module';
+import { SuccessHandler } from '@dfgpublicidade/node-handler-module';
 import appDebugger from 'debug';
 import { NextFunction, Request, Response } from 'express';
 import BaseController from './baseController';
@@ -14,11 +14,9 @@ class UserAgentController extends BaseController {
 
             debug(`User-agent found: ${req.headers['user-agent']}`);
 
-            const result: Result = new Result(ResultStatus.SUCCESS, {
+            return SuccessHandler.handle(app, {
                 userAgent: req.headers['user-agent']
-            });
-
-            res.json(result);
+            })(req, res, next);
         };
     }
 }

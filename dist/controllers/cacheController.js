@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_cache_module_1 = __importStar(require("@dfgpublicidade/node-cache-module"));
-const node_result_module_1 = __importStar(require("@dfgpublicidade/node-result-module"));
+const node_handler_module_1 = require("@dfgpublicidade/node-handler-module");
 const axios_1 = __importDefault(require("axios"));
 const debug_1 = __importDefault(require("debug"));
 const tedis_1 = require("tedis");
@@ -50,11 +50,9 @@ class CacheController extends baseController_1.default {
                     }
                 }
                 debug('Cache successful cleaned');
-                const result = new node_result_module_1.default(node_result_module_1.ResultStatus.SUCCESS, {
+                return node_handler_module_1.SuccessHandler.handle(app, {
                     message: res.lang ? res.lang('cacheCleaned') : 'Cache successful cleaned'
-                });
-                res.status(node_result_module_1.HttpStatus.success);
-                res.json(result);
+                })(req, res, next);
             }
             catch (error) {
                 debug('An error has occurred when tried to clear cache');

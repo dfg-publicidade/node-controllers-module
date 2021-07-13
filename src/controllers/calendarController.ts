@@ -1,6 +1,6 @@
 import App from '@dfgpublicidade/node-app-module';
-import Result, { HttpStatus, ResultStatus } from '@dfgpublicidade/node-result-module';
-import Strings from '@dfgpublicidade/node-strings-module';
+import { InvalidRequestHandler, SuccessHandler } from '@dfgpublicidade/node-handler-module';
+import { HttpStatus } from '@dfgpublicidade/node-result-module';
 import appDebugger from 'debug';
 import { NextFunction, Request, Response } from 'express';
 import { createEvent, ReturnObject } from 'ics';
@@ -37,15 +37,7 @@ class CalendarController extends BaseController {
 
                 if (errors.length > 0) {
                     debug('Invalid data to create file');
-
-                    const result: Result = new Result(ResultStatus.WARNING, {
-                        message: res.lang ? res.lang('invalidData') : 'The data provided is invalid',
-                        // eslint-disable-next-line @typescript-eslint/naming-convention
-                        errors_validation: errors.map((error: any): string => error.message)
-                    });
-
-                    res.status(HttpStatus.badRequest);
-                    res.json(result);
+                    return InvalidRequestHandler.handle(app, 'invalidData', errors)(req, res, next);
                 }
                 else {
                     const startCal: Moment = moment(start).tz(process.env.TZ);
@@ -72,23 +64,15 @@ class CalendarController extends BaseController {
 
                     if (icsData.error) {
                         debug('An error has ocurred creating .ics file');
-
-                        const result: Result = new Result(ResultStatus.WARNING, {
-                            message: res.lang ? res.lang('invalidData') : 'The data provided is invalid',
-                            // eslint-disable-next-line @typescript-eslint/naming-convention
-                            errors_validation: [
-                                icsData.error
-                            ]
-                        });
-
-                        res.status(HttpStatus.badRequest);
-                        res.json(result);
+                        return InvalidRequestHandler.handle(app, 'invalidData', [icsData.error])(req, res, next);
                     }
                     else {
-                        res.header('Content-Type', 'text/calendar');
-                        res.header('Content-Disposition', `attachment; filename="${Strings.toUrl(title)}.ics"`);
-                        res.write(icsData.value);
-                        res.end();
+                        return SuccessHandler.handle(app, icsData.value, HttpStatus.success, {
+                            contentType: 'text/calendar',
+                            contentDisposition: 'attachment',
+                            filename: title,
+                            ext: '.ics'
+                        })(req, res, next);
                     }
                 }
             }
