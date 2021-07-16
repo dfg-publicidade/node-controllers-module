@@ -1,6 +1,5 @@
 import App from '@dfgpublicidade/node-app-module';
 import { InvalidRequestHandler, SuccessHandler } from '@dfgpublicidade/node-handler-module';
-import { HttpStatus } from '@dfgpublicidade/node-result-module';
 import appDebugger from 'debug';
 import { NextFunction, Request, Response } from 'express';
 import { createEvent, ReturnObject } from 'ics';
@@ -67,7 +66,7 @@ class CalendarController extends BaseController {
                         return InvalidRequestHandler.handle(app, 'invalidData', [icsData.error])(req, res, next);
                     }
                     else {
-                        return SuccessHandler.handle(app, icsData.value, HttpStatus.success, {
+                        return SuccessHandler.handle(app, icsData.value, {
                             contentType: 'text/calendar',
                             contentDisposition: 'attachment',
                             filename: title,

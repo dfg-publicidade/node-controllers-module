@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_handler_module_1 = require("@dfgpublicidade/node-handler-module");
-const node_result_module_1 = require("@dfgpublicidade/node-result-module");
 const debug_1 = __importDefault(require("debug"));
 const ics_1 = require("ics");
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
@@ -60,7 +59,7 @@ class CalendarController extends baseController_1.default {
                         return node_handler_module_1.InvalidRequestHandler.handle(app, 'invalidData', [icsData.error])(req, res, next);
                     }
                     else {
-                        return node_handler_module_1.SuccessHandler.handle(app, icsData.value, node_result_module_1.HttpStatus.success, {
+                        return node_handler_module_1.SuccessHandler.handle(app, icsData.value, {
                             contentType: 'text/calendar',
                             contentDisposition: 'attachment',
                             filename: title,
