@@ -43,6 +43,9 @@ class CacheController extends baseController_1.default {
                 }
                 else {
                     debug('Emptying global cache');
+                    if (!app.config.redis.password) {
+                        delete app.config.redis.password;
+                    }
                     const tedis = new tedis_1.Tedis(app.config.redis);
                     const keys = await tedis.keys('*');
                     for (const key of keys) {
