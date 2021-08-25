@@ -33,33 +33,27 @@ abstract class BaseController {
             }
             case 'integer': {
                 const param: Param = params.getInt(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             case 'float': {
                 const param: Param = params.getFloat(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             case 'date': {
                 const param: Param = params.getDate(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             case 'datetime': {
                 const param: Param = params.getDateTime(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             case 'boolean': {
                 const param: Param = params.getBoolean(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             default: {
                 const param: Param = params.getString(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
         }
     }

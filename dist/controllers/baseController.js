@@ -28,33 +28,27 @@ class BaseController {
             }
             case 'integer': {
                 const param = params.getInt(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             case 'float': {
                 const param = params.getFloat(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             case 'date': {
                 const param = params.getDate(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             case 'datetime': {
                 const param = params.getDateTime(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             case 'boolean': {
                 const param = params.getBoolean(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
             default: {
                 const param = params.getString(name);
-                // eslint-disable-next-line no-null/no-null
-                return param ? param.value : null;
+                return param ? param.value : undefined;
             }
         }
     }
