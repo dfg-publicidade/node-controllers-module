@@ -27,6 +27,9 @@
         "tedis": "0.1.12",
         "validate": "5.1.0"
     },
+    "overrides": {
+        "redis": "4.0.1"
+    },
     "devDependencies": {
         "@dfgpublicidade/eslint-config": "git+ssh://git@github.com/dfg-publicidade/eslint-config.git",
         "@types/express": "^4.17.13",
