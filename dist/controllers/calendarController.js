@@ -10,7 +10,7 @@ const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const eventValidation_1 = __importDefault(require("../validators/eventValidation"));
 const baseController_1 = __importDefault(require("./baseController"));
 /* Module */
-const debug = debug_1.default('module:controller-calendar');
+const debug = (0, debug_1.default)('module:controller-calendar');
 class CalendarController extends baseController_1.default {
     static generate(app) {
         return async (req, res, next) => {
@@ -25,7 +25,7 @@ class CalendarController extends baseController_1.default {
                 const latitude = this.getParam(app, req.query, 'latitude', 'float');
                 const longitude = this.getParam(app, req.query, 'longitude', 'float');
                 const categories = this.getParam(app, req.query, 'categories');
-                const errors = eventValidation_1.default({
+                const errors = (0, eventValidation_1.default)({
                     start, end,
                     title, description,
                     location, url,
@@ -37,8 +37,8 @@ class CalendarController extends baseController_1.default {
                     return node_handler_module_1.InvalidRequestHandler.handle(app, 'invalidData', errors)(req, res, next);
                 }
                 else {
-                    const startCal = moment_timezone_1.default(start).tz(process.env.TZ);
-                    const endCal = moment_timezone_1.default(end).tz(process.env.TZ);
+                    const startCal = (0, moment_timezone_1.default)(start).tz(process.env.TZ);
+                    const endCal = (0, moment_timezone_1.default)(end).tz(process.env.TZ);
                     const duration = moment_timezone_1.default.duration(endCal.diff(startCal));
                     const hours = duration.asHours();
                     // eslint-disable-next-line no-magic-numbers
@@ -53,7 +53,7 @@ class CalendarController extends baseController_1.default {
                         geo: latitude && longitude ? { lat: latitude, lon: longitude } : undefined,
                         categories: categories ? categories.split(',') : []
                     };
-                    const icsData = ics_1.createEvent(event);
+                    const icsData = (0, ics_1.createEvent)(event);
                     if (icsData.error) {
                         debug('An error has ocurred creating .ics file');
                         return node_handler_module_1.InvalidRequestHandler.handle(app, 'invalidData', [icsData.error])(req, res, next);

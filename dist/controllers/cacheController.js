@@ -29,7 +29,7 @@ const debug_1 = __importDefault(require("debug"));
 const tedis_1 = require("tedis");
 const baseController_1 = __importDefault(require("./baseController"));
 /* Module */
-const debug = debug_1.default('module:controller-cache');
+const debug = (0, debug_1.default)('module:controller-cache');
 class CacheController extends baseController_1.default {
     static clean(app) {
         return async (req, res, next) => {
@@ -64,7 +64,7 @@ class CacheController extends baseController_1.default {
         };
     }
     static async requestCleaning(app, api) {
-        return axios_1.default({
+        return (0, axios_1.default)({
             method: 'DELETE',
             url: app.config.api.url + app.config.api[api].uri + app.config.api[api].endpoints.cache,
             headers: {

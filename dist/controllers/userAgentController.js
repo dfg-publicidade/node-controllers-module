@@ -7,7 +7,7 @@ const node_handler_module_1 = require("@dfgpublicidade/node-handler-module");
 const debug_1 = __importDefault(require("debug"));
 const baseController_1 = __importDefault(require("./baseController"));
 /* Module */
-const debug = debug_1.default('module:controller-user-agent');
+const debug = (0, debug_1.default)('module:controller-user-agent');
 class UserAgentController extends baseController_1.default {
     static view(app) {
         return async (req, res, next) => {
