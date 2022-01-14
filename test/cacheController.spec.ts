@@ -17,7 +17,7 @@ import ChaiHttp = require('chai-http');
 /* Tests */
 chai.use(ChaiHttp);
 
-describe('cacheController.ts', (): void => {
+describe.skip('cacheController.ts', (): void => {
     let exp: Express;
     let httpServer: http.Server;
     let app: App;
